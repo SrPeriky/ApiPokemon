@@ -1,8 +1,9 @@
 const app = new Vue({
 	el: '#app',
 	data: {
-		key: null,
+		key: '',
 		pokemon: null,
+		btn: null,
 	},
 	methods: {
 		setPokemon: (data) => app.pokemon = {
@@ -14,25 +15,19 @@ const app = new Vue({
     		defensa: data.stats[2].base_stat,
     		especial: data.stats[3].base_stat,
 		}, 
+		isKey: () => {
+			app.key = app.key.replace(/ /g, "")
+			return (app.key == '') ? false : true; 
+		},
 		search () {
-			$.ajax({
-				type: "GET",
-				mimeType: 'text/html; charset=utf-8',
-				method: 'GET',
-		        dataType: "json",
+			if(this.isKey()) $.ajax({
+				dataType: "json",
 		        url: 'https://pokeapi.co/api/v2/pokemon/'+app.key,
-		        cache: false,
-		        success: function(data)
-		        {
-		        	if (data) {
-		        		console.log(app.setPokemon(data));
-		        	} 
-		        	
+		        success: (data) => {
+		        	app.setPokemon(data)
 		        },
-		        error: function() {
-		        	toastr["error"]("Error! Pokemon no encontrado");
-			    },
-		    });
+		        error: () => toastr["error"]("Error! Pokemon no encontrado"),
+		    });	else toastr["error"]("Error! Pokemon no encontrado")
 		},
 	}
 });

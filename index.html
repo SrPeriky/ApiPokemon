@@ -19,15 +19,16 @@
 	<div id="app">
 		<div class="position-relative container">
 			<nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
-				<div class="row col-12">
-					<div class="col-8 col-sm-8 col-md-10"> 
-						<input type="text" v-model="key" class="form-control" placeholder="Buscar por número o nombre"> 
+				<form class="col-12" @submit="search" onsubmit="return false">
+					<div class="row ">
+						<div class="col-8 col-sm-8 col-md-10"> 
+							<input type="text" v-model="key" class="form-control" placeholder="Buscar por número o nombre"> 
+						</div> 
+						<div class="col-4 col-sm-4 col-md-2 d-grid gap-2"> 
+							<input type="submit" value="buscar" class="btn btn-light"> 
+						</div> 
 					</div> 
-					<div class="col-4 col-sm-4 col-md-2 d-grid gap-2"> 
-						<button class="btn btn-light" @click="search">buscar</button> 
-					</div> 
-					
-				</div> 
+				</form>
 			</nav>
 			<div v-if="pokemon" class="card card-body position-absolute top-0 start-50 text-center translate-middle-x" style="width: 18rem;">
 			  	<div class="row ">
