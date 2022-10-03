@@ -18,7 +18,7 @@ Para desplegar este proyecto, ejecute 
 https://github.com/SrPeriky/ApiPokemon.git
 ```
 
-Ahora ejecute ej archivo `index.html` con su navegador de preferencia
+Ahora ejecute el archivo `index.html` con su navegador de preferencia
 
 ---
 
