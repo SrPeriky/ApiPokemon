@@ -4,98 +4,65 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Sr Pokemón</title>
+	<!-- bootstrap @5 -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+	<!-- VueJS @2 -->
+	<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+	<!-- jquery -->
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+	<!-- toastr -->
+	<link rel="stylesheet" type="text/css" href="css/toastr.min.css">
+	<script type="text/javascript" src="js/toastr.min.js"></script>
 </head>
 <body class="bg-primary">
 	<br>	
 	<div id="app">
-		<div class="container">
-			<div class="card p-3"> 
-				<div class="row">
+		<div class="position-relative container">
+			<nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
+				<div class="row col-12">
 					<div class="col-12 col-sm-8 col-md-10"> 
-						<input type="text" v-model="key" class="form-control" placeholder="Buscar po número o nombre"> 
+						<input type="text" v-model="key" class="form-control" placeholder="Buscar por número o nombre"> 
 					</div> 
 					<div class="col-12 col-sm-4 col-md-2 d-grid gap-2"> 
-						<button class="btn btn-dark" @click="search">buscar</button> 
+						<button class="btn btn-light" @click="search">buscar</button> 
 					</div> 
-					<div v-if="error" class="col-12">
-						<br>
-						<div class="alert alert-danger" role="alert">
-						  Error! Pokemon no encontrado
-						</div>
-					</div>
+					
 				</div> 
-			</div> <br>
-			<div v-if="pokemon" class="card p-3">
-				<div class="row">
-					<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 text-center">
-						<div class="card text-bg-secondary">
-						  <img :src="pokemon.sprites.front_default" class="card-img" alt="...">
-						  <div class="card-img-overlay">
-						    <h5 class="card-title">{{pokemon.name}}</h5>
-						  </div>
-						</div>
-					</div>
-					<div class="col-12 col-sm-6 col-md-8 col-lg-9 col-xl-10">
-						<div class=" row">
-						 	<p>
-						 		<h5>stats:</h5>
-						 		<div v-for="stat in pokemon.stats" class="col-auto">
-						 		{{stat.stat.name}}: {{stat.base_stat}}
-								</div>	
-							</p>
-							<p>
-								<h5>abilities</h5>
-								<div v-for="abilitie in pokemon.abilities" class="col-auto">
-							 		{{abilitie.ability.name}}
-								</div>
-							</p>
-							
-						</div> 
-					</div>
-				</div>
+			</nav>
+			<div v-if="pokemon" class="card card-body position-absolute top-0 start-50 text-center translate-middle-x" style="width: 18rem;">
+			  	<div class="row ">
+			  		<div class="col-6 text-start fw-light">
+			  			{{pokemon.experiencia}} exp
+			  		</div>
+			  		<div class="col-6 text-end fw-light">
+			  			{{pokemon.hp}} hp
+			  		</div>
+			  	</div>
+			  	<div class="text-center my-2">
+			  		<img :src="pokemon.imgCvg" class="card-img-top bg-info" style="width: 12rem; height: 12rem" alt="Imagen del Pokemon">
+			  	</div>
+			  	<span class=" fw-bold">{{pokemon.nombre}}</span>
+			    <hr class="my-2">
+			    <div class="row text-center">
+			    	<div class="col-4">
+			    		<span class="font-monospace fw-bold">{{pokemon.ataque}}K</span><br>
+			    		<small><span class="fw-lighter">Ataque</span></small>
+			    	</div>
+			    	<div class="col-4">
+			    		<span class="font-monospace fw-bold">{{pokemon.especial}}K</span><br>
+			    		<small><span class="fw-lighter">Ataque Especial</span></small>
+			    	</div>
+			    	<div class="col-4">
+			    		<span class="font-monospace fw-bold">{{pokemon.defensa}}K</span><br>
+			    		<small><span class="fw-lighter">Defensa</span></small>
+			    	</div>
+			    </div>
 			</div>
-
-			
 		</div>
 
 	</div>
 
-	<script type="text/javascript">
-		const app = new Vue({
-			el: '#app',
-			data: {
-				key: null,
-				error: false,
-				pokemon: null,
-			},
-			methods: {
-				search () {
-					$.ajax({
-						type: "GET",
-						mimeType: 'text/html; charset=utf-8',
-						method: 'GET',
-				        dataType: "json",
-				        url: 'https://pokeapi.co/api/v2/pokemon/'+app.key,
-				        cache: false,
-				        success: function(result)
-				        {
-				        	if (result) {
-				        		app.pokemon = result;
-				        		app.error = false;
-				        	} 
-				        	
-				        },
-				        error: function() {
-				        	app.error = true;
-					    },
-				    });
-				},
-			}
-		});
-	</script>
+	<script type="text/javascript" src="js/main.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </body>
 </html>
