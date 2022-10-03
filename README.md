@@ -18,7 +18,7 @@ Para desplegar este proyecto, ejecute 
 https://github.com/SrPeriky/ApiPokemon.git
 ```
 
-Esto descargará un archivo `index.html` el cual debe abrir con su navegador de preferencia
+Ahora ejecute ej archivo `index.html` con su navegador de preferencia
 
 ---
 
@@ -28,3 +28,4 @@ Esto descargará un archivo `index.html` el cual debe abrir con su navegador de 
 *   [jQuery](https://jquery.com/)
 *   [pokeapi](https://pokeapi.co/)
 *   [Bootstrap](https://getbootstrap.com/)
+*   [toastr](https://codeseven.github.io/toastr/)
