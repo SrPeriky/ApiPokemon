@@ -15,7 +15,7 @@ Se creó un pequeño buscador de Pokemon, el cual muestra: el hombre, las habili
 Para desplegar este proyecto, ejecute 
 
 ```plaintext
-https://github.com/SrPeriky/ApiPokemon.git
+git clone https://github.com/SrPeriky/ApiPokemon.git
 ```
 
 Ahora ejecute el archivo `index.html` con su navegador de preferencia
